@@ -555,7 +555,7 @@ BasicGame.Game.prototype = {
 	this.showReturn = this.time.now + BasicGame.RETURN_MESSAGE_DELAY; 
 },
   
-  quitGame: function(pointer) {
+  quitGame: function(pointer, win = false) {
 
     //  Here you should destroy anything you no longer need.
     //  Stop music, delete sprites, purge caches, free resources, all that good stuff.
@@ -568,11 +568,16 @@ BasicGame.Game.prototype = {
     this.scoreText.destroy();     
     this.endText.destroy();     
     this.returnText.destroy();
-    //  Then let's go back to the main menu.
-    this.state.start('MainMenu');
     this.bossMusic.destroy();
 	this.music.destroy();
 	this.gameOverMusic.destroy();
+    //  Then let's go back to the main menu or next stage.
+    if(!win) {
+    	this.state.start('MainMenu');
+    } 
+    else {
+    	this.state.start('Stage2');
+    }
 
   }
 
