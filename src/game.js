@@ -11,9 +11,9 @@ BasicGame.Game.prototype = {
 	this.setupEnemies(); 
 	this.setupBullets(); 
 	this.setupExplosions();
-  this.setupPlayerIcons();
+  	this.setupPlayerIcons();
 	this.setupText(); 
-  this.setupAudio();
+  	this.setupAudio();
 
 	this.cursors = this.input.keyboard.createCursorKeys(); 
 	},
