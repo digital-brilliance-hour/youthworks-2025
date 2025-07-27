@@ -1,4 +1,4 @@
-//Stage 2 Object
+//Stage 2 Object Edit
 BasicGame.Stage2 = function(game) {
 
 };
