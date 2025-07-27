@@ -1,4 +1,4 @@
-//Game Logic Object
+//Stage 2 Object
 BasicGame.Stage2 = function(game) {
 
 };
