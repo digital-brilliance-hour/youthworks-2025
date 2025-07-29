@@ -418,7 +418,7 @@ BasicGame.Game.prototype = {
 
     // Set the animation for each sprite 
     this.enemyPool.forEach(function (enemy) { 
-      enemy.animations.add('fly', [ 0, 1, 2 ], 20, true);
+      enemy.animations.add('fly', [ 0, 1, 2,3,4,5,6,7,8], 20, true);
       enemy.animations.add('hit', [ 3, 1, 3, 2 ], 20, false);       
       enemy.events.onAnimationComplete.add( function (e) {         
       e.play('fly');       
