@@ -33,7 +33,7 @@ BasicGame.Preloader.prototype = {
     this.load.spritesheet('stage1-enemy1', 'assets/enemy1.png');
     this.load.spritesheet('greenEnemy', 'assets/enemy.png', 32, 32);
     this.load.spritesheet('whiteEnemy', 'assets/shooting-enemy.png', 32, 32);
-    this.load.spritesheet('boss', 'assets/boss.png', 93, 75);
+    this.load.spritesheet('boss', 'assets/boss1.png', 135, 126);
     this.load.spritesheet('explosion', 'assets/explosion.png', 32, 32);
     this.load.spritesheet('player', 'assets/playerShoot.png', 64, 64);
     // this.load.audio('explosion', ['assets/explosion.ogg', 'assets/explosion.wav']);

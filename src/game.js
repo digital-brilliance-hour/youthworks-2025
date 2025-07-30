@@ -463,13 +463,13 @@ BasicGame.Game.prototype = {
   		'dropRate', BasicGame.BOSS_DROP_RATE, false, false, 0, true     
   	);      
   	// Set the animation for each sprite     
-  	this.bossPool.forEach(function (enemy) {       
-	  	enemy.animations.add('fly', [ 0, 1, 2 ], 20, true);       
-	  	enemy.animations.add('hit', [ 3, 1, 3, 2 ], 20, false);       
-	  	enemy.events.onAnimationComplete.add( function (e) {         
-	  		e.play('fly');       
-	    }, this);     
-    });      
+  	//this.bossPool.forEach(function (enemy) {       
+	  	//enemy.animations.add('fly', [ 0, 1, 2 ], 20, true);       
+	  	//enemy.animations.add('hit', [ 3, 1, 3, 2 ], 20, false);       
+	  	//enemy.events.onAnimationComplete.add( function (e) {         
+	  		//e.play('fly');       
+	    //}, this);     
+    //});      
     this.boss = this.bossPool.getTop();     
     this.bossApproaching = false;
   }, 
