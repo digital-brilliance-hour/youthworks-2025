@@ -275,11 +275,18 @@ BasicGame.Game.prototype = {
 	},
   
   damageEnemy: function (enemy, damage) { 
-	enemy.damage(damage); 
+	enemy.damage(damage);
+	if (enemy.key === 'boss') { 
+		this.enemyPool.destroy();         
+		    this.shooterPool.destroy();         
+		    this.bossPool.destroy();         
+		    this.enemyBulletPool.destroy();         
+		    this.displayEnd(true);
+	}
 	if (enemy.alive) { 
 		enemy.play('hit'); 
 	} else { 
-  	this.explosionSFX.play();
+  	//this.explosionSFX.play();
 		this.explode(enemy); 
     this.spawnPowerUp(enemy);
     this.addToScore(enemy.reward);
@@ -315,13 +322,13 @@ BasicGame.Game.prototype = {
     	this.spawnBoss();     
 	}
 	},
-  
+   
   spawnBoss: function () { 
   	this.bossApproaching = true; 
   	this.boss.reset(this.game.width / 2, 0, BasicGame.BOSS_HEALTH); 
   	this.physics.enable(this.boss, Phaser.Physics.ARCADE); 
   	this.boss.body.velocity.y = BasicGame.BOSS_Y_VELOCITY; 
-  	this.boss.play('fly'); 
+  	//this.boss.play('fly'); 
     this.music.stop();
 		this.bossMusic.play();
 },
@@ -334,8 +341,8 @@ BasicGame.Game.prototype = {
 	explosion.reset(sprite.x, sprite.y); 
 	explosion.play('boom', 15, false, true); 
 	// add the original sprite's velocity to the explosion 
-	explosion.body.velocity.x = sprite.body.velocity.x; 
-	explosion.body.velocity.y = sprite.body.velocity.y; 
+	//explosion.body.velocity.x = sprite.body.velocity.x; 
+	//explosion.body.velocity.y = sprite.body.velocity.y; 
 	},
   
   fire: function() { 
