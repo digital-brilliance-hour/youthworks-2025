@@ -545,7 +545,7 @@ BasicGame.Game.prototype = {
 	this.bossMusic.stop();
 	this.music.stop();
 	this.gameOverMusic.play();
-	var msg = win ? 'You Win!!!' : 'Game Over!'; 
+	var msg = win ? 'You Win!! :)' : 'Game Over :('; 
 	this.endText = this.add.text(  
 	this.game.width / 2, this.game.height / 2 - 60, msg,  
 		{ font: '72px serif', fill: '#fff' } 
