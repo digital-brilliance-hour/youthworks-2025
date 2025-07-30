@@ -408,7 +408,7 @@ BasicGame.Game.prototype = {
     this.enemyPool = this.add.group(); 
     this.enemyPool.enableBody = true; 
     this.enemyPool.physicsBodyType = Phaser.Physics.ARCADE; 
-    this.enemyPool.createMultiple(50, 'greenEnemy'); 
+    this.enemyPool.createMultiple(50, 'stage1-enemy1'); 
     this.enemyPool.setAll('anchor.x', 0.5); 
     this.enemyPool.setAll('anchor.y', 0.5); 
     this.enemyPool.setAll('outOfBoundsKill', true); 
@@ -417,13 +417,13 @@ BasicGame.Game.prototype = {
     this.enemyPool.setAll('dropRate', BasicGame.ENEMY_DROP_RATE, false, false, 0, true);
 
     // Set the animation for each sprite 
-    this.enemyPool.forEach(function (enemy) { 
+    /* this.enemyPool.forEach(function (enemy) { 
       enemy.animations.add('fly', [ 0, 1, 2 ], 20, true);
       enemy.animations.add('hit', [ 3, 1, 3, 2 ], 20, false);       
       enemy.events.onAnimationComplete.add( function (e) {         
       e.play('fly');       
       }, this);
-    }); 
+    });  */
 
     this.nextEnemyAt = 0; 
     this.enemyDelay = BasicGame.SPAWN_ENEMY_DELAY; 
