@@ -322,7 +322,7 @@ BasicGame.Game.prototype = {
     	this.spawnBoss();     
 	}
 	},
-   
+    
   spawnBoss: function () { 
   	this.bossApproaching = true; 
   	this.boss.reset(this.game.width / 2, 0, BasicGame.BOSS_HEALTH); 
