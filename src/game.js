@@ -276,13 +276,13 @@ BasicGame.Game.prototype = {
   
   damageEnemy: function (enemy, damage) { 
 	enemy.damage(damage);
-	if (enemy.key === 'boss') { 
+	/* if (enemy.key === 'boss') { 
 		this.enemyPool.destroy();         
 		    this.shooterPool.destroy();         
 		    this.bossPool.destroy();         
 		    this.enemyBulletPool.destroy();         
 		    this.displayEnd(true);
-	}
+	} */
 	if (enemy.alive) { 
 		enemy.play('hit'); 
 	} else { 
