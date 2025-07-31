@@ -223,13 +223,21 @@ BasicGame.Game.prototype = {
   },
 
   update: function () { 
-	//this.checkCollisions();
-	 this.checkCollisions(); 
+	this.checkCollisions(); 
 	this.spawnEnemies(); 
-  this.enemyFire(); 
+  	this.enemyFire(); 
 	this.processPlayerInput(); 
 	this.processDelayedEffects(); 
-	this.bg1.y += 0.7;
+	if (this.bg1.y >= 0) {
+          this.bg1.y = 0;
+          if (this.bossPool.countDead() == 1) {    
+            this.spawnBoss();  
+          }
+
+        } 
+        else {
+          this.bg1.y += 0.7;
+        }
 	},
   
   enemyFire: function() { 
@@ -344,9 +352,9 @@ BasicGame.Game.prototype = {
 	this.score += score; 
 	this.scoreText.text = this.score; 
   // this approach prevents the boss from spawning again upon winning     
-    if (this.score >= 20000 && this.bossPool.countDead() == 1) {       
-    	this.spawnBoss();     
-	}
+    // if (this.score >= 20000 && this.bossPool.countDead() == 1) {       
+    // 	this.spawnBoss();     
+	// }
 	},
   
   spawnBoss: function () { 
@@ -540,6 +548,10 @@ BasicGame.Game.prototype = {
     // Automatically kill the bullet sprites when they go out of bounds 
     this.bulletPool.setAll('outOfBoundsKill', true); 
     this.bulletPool.setAll('checkWorldBounds', true); 
+	this.bulletPool.forEach(function (bullet) {       
+		//enemy.animations.add('fly', [ 0, 1, 2 ], 20, true); 
+		bullet.animations.add('fly', Array.from({length:3}, (_, i) => i).toSpliced(1, 0, 0), 20, true);   
+	});    
 
     this.nextShotAt = 0; 
     this.shotDelay = BasicGame.SHOT_DELAY; 
