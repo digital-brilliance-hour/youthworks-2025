@@ -6,6 +6,7 @@ BasicGame.Stage2 = function(game) {
 BasicGame.Stage2.prototype = {
 
   create: function () { 
+	//this.fadeIn();
 	this.setupBackground(); 
 	this.setupPlayer(); 
 	this.setupEnemies(); 
@@ -17,6 +18,18 @@ BasicGame.Stage2.prototype = {
 	console.log("Now in stage 2 :D");
 
 	this.cursors = this.input.keyboard.createCursorKeys(); 
+	this.fadeIn(5000, 3000);
+	},
+
+	fadeIn: function(duration, delay) {
+		this.fadeOverlay = this.game.add.graphics(0, 0);
+		this.fadeOverlay.beginFill(0x000000, 1);
+		this.fadeOverlay.drawRect(0, 0, this.game.width, this.game.height);
+		this.fadeOverlay.endFill();
+		this.fadeOverlay.alpha = 1;
+
+		this.game.add.tween(this.fadeOverlay)
+			.to({ alpha: 0 }, duration, Phaser.Easing.Linear.None, true, delay);
 	},
   
   // 
@@ -193,9 +206,12 @@ BasicGame.Stage2.prototype = {
   },
 
   update: function () { 
+
+	if (this.fadingIn) return; //Wait for fade to complete to start game
+
 	this.checkCollisions(); 
 	this.spawnEnemies(); 
-  this.enemyFire(); 
+  	this.enemyFire(); 
 	this.processPlayerInput(); 
 	this.processDelayedEffects(); 
 	this.bg2.y += 0.7;
