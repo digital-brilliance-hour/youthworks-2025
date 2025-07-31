@@ -481,7 +481,7 @@ BasicGame.Stage2.prototype = {
     this.shooterPool = this.add.group();     
   	this.shooterPool.enableBody = true;     
   	this.shooterPool.physicsBodyType = Phaser.Physics.ARCADE;     
-  	this.shooterPool.createMultiple(20, 'whiteEnemy');     
+  	this.shooterPool.createMultiple(20, 'stage1-enemy2');     
   	this.shooterPool.setAll('anchor.x', 0.5);     
   	this.shooterPool.setAll('anchor.y', 0.5);     
   	this.shooterPool.setAll('outOfBoundsKill', true);     
@@ -490,12 +490,13 @@ BasicGame.Stage2.prototype = {
     this.shooterPool.setAll('dropRate', BasicGame.SHOOTER_DROP_RATE, false, false, 0, true);
   	// Set the animation for each sprite     
   	this.shooterPool.forEach(function (enemy) {       
-	  	enemy.animations.add('fly', [ 0, 1, 2 ], 20, true);       
+	  	//enemy.animations.add('fly', [ 0, 1, 2 ], 20, true); 
+		enemy.animations.add('fly', Array.from({length:33}, (_, i) => i).toSpliced(1, 0, 0), 20, true);   
 	  	enemy.animations.add('hit', [ 3, 1, 3, 2 ], 20, false);       
 	  	enemy.events.onAnimationComplete.add( function (e) {         
 		  	e.play('fly');       
 		}, this);     
-	});      
+	});          
     // start spawning 5 seconds into the game     
     this.nextShooterAt = this.time.now + Phaser.Timer.SECOND * 5;     
     this.shooterDelay = BasicGame.SPAWN_SHOOTER_DELAY;
