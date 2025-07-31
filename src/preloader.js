@@ -22,10 +22,13 @@ BasicGame.Preloader.prototype = {
     //  What that does is automatically crop the sprite from 0 to full-width
     //  as the files below are loaded in.
     this.load.setPreloadSprite(this.preloadBar);
+           this.load.image('bg2', 'assets/stageBackground2/newStageBackground2.png');
+    this.load.image('bl2', 'assets/stageBackground2/backlayer1/backlayer1.png');
 
     //  Here we load the rest of the assets our game needs.
     this.load.image('titlepage', 'assets/titlepage.png');
     this.load.image('sea', 'assets/sea.png');
+    this.load.image('bg1', 'assets/stageBackground1.png');
     this.load.image('sand', 'assets/sand.png');
     this.load.image('bullet', 'assets/bullet2.png');
     this.load.image('enemyBullet', 'assets/enemy-bullet.png');
@@ -42,8 +45,8 @@ BasicGame.Preloader.prototype = {
     this.load.audio('playerFire', ['assets/player-fire.ogg', 'assets/player-fire.wav']);
     this.load.audio('powerUp', ['assets/powerup.ogg', 'assets/powerup.wav']);
     this.load.audio('titleMusic', ['audio/main_menu.mp3']);
-       this.load.image('bg2', 'assets/stageBackground2/newStageBackground2.png');
-    this.load.image('bl2', 'assets/stageBackground2/backlayer1/backlayer1.png');
+    this.load.audio('titleMusic', ['assets/bgm/title-music.ogg']);
+
     //  + lots of other required assets here
 
   },
