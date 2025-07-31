@@ -560,7 +560,7 @@ BasicGame.Game.prototype = {
     
     if (win) {
     	return this.state.start('Stage2');
-    };
+    }
   },
   
   quitGame: function(pointer, win = false) {
@@ -579,6 +579,7 @@ BasicGame.Game.prototype = {
     this.bossMusic.destroy();
 	this.music.destroy();
 	this.gameOverMusic.destroy();
+	this.state.start('MainMenu');
     //  Then let's go back to the main menu or next stage.
     //if(!win) {
     	//this.state.start('MainMenu');
