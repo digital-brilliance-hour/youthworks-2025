@@ -122,7 +122,7 @@ BasicGame.Game.prototype = {
   this.enemyFireSFX = this.add.audio('enemyFire', 0.6, false);
   this.playerFireSFX = this.add.audio('playerFire', 0.6, false);
   this.powerUpSFX = this.add.audio('powerUp', 0.6, false);
-  this.music = this.add.audio('stageMusic', 0.4, true);
+  this.music = this.add.audio('stageOne', 0.4, true);
   this.bossMusic = this.add.audio('bossMusic', 0.4, true);
   this.gameOverMusic = this.add.audio('gameOverMusic');
   this.music.play();
@@ -313,7 +313,7 @@ BasicGame.Game.prototype = {
 	this.score += score; 
 	this.scoreText.text = this.score; 
   // this approach prevents the boss from spawning again upon winning     
-    if (this.score >= 20 && this.bossPool.countDead() == 1) {       
+    if (this.score >= 20000 && this.bossPool.countDead() == 1) {       
     	this.spawnBoss();     
 	}
 	},

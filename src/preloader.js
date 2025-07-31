@@ -46,6 +46,7 @@ BasicGame.Preloader.prototype = {
     this.load.audio('powerUp', ['assets/powerup.ogg', 'assets/powerup.wav']);
     this.load.audio('titleMusic', ['audio/main_menu.mp3']);
     this.load.audio('titleMusic', ['assets/bgm/title-music.ogg']);
+   this.load.audio('stageOne', ['assets/bgm/stageonemusic.ogg']);
 
     //  + lots of other required assets here
 
