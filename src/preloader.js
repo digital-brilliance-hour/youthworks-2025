@@ -32,7 +32,7 @@ BasicGame.Preloader.prototype = {
     this.load.image('powerup1', 'assets/powerup1.png');
     this.load.spritesheet('stage1-enemy1', 'assets/enemy1.png');
     this.load.spritesheet('greenEnemy', 'assets/enemy.png', 32, 32);
-    this.load.spritesheet('whiteEnemy', 'assets/shooting-enemy.png', 32, 32);
+    this.load.spritesheet('stage1-enemy2', 'assets/ememy2shoot.png', 128, 128); 
     this.load.spritesheet('boss', 'assets/boss1.png', 135, 126);
     this.load.spritesheet('explosion', 'assets/explosion.png', 32, 32);
     this.load.spritesheet('player', 'assets/playerShoot.png', 64, 64);
