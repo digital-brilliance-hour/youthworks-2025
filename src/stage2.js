@@ -214,11 +214,20 @@ BasicGame.Stage2.prototype = {
   	this.enemyFire(); 
 	this.processPlayerInput(); 
 	this.processDelayedEffects(); 
-	this.bg2.y += 0.7;
-    	this.processDelayedEffects();
+	if (this.bg2.y >= 0) {
+          this.bg2.y = 0;
+          if (this.bossPool.countDead() == 1) {    
+            this.spawnBoss();  
+          }
+
+        } 
+        else {
+          this.bg2.y += 0.7;
+        }
+    this.processDelayedEffects();
 	this.enemyPool.forEachAlive(function (enemy3) {
-  this.physics.arcade.moveToObject(enemy3, this.player, 100);
-}, this); 
+  		this.physics.arcade.moveToObject(enemy3, this.player, 100);
+	}, this); 
 	},
   
   enemyFire: function() { 
@@ -307,7 +316,7 @@ BasicGame.Stage2.prototype = {
     this.addToScore(enemy.reward);
     // We check the sprite key (e.g. 'greenEnemy') to see if the sprite is a boss       
 	    // For full games, it would be better to set flags on the sprites themselves       
-	    if (enemy.key === 'boss') {         
+	    if (enemy.key === 'boss2') {         
 		    this.enemyPool.destroy();         
 		    this.shooterPool.destroy();         
 		    this.bossPool.destroy();         
@@ -333,14 +342,14 @@ BasicGame.Stage2.prototype = {
 	this.score += score; 
 	this.scoreText.text = this.score; 
   // this approach prevents the boss from spawning again upon winning     
-    if (this.score >= 20 && this.bossPool.countDead() == 1) {       
-    	this.spawnBoss();     
-	}
+    // if (this.score >= 20 && this.bossPool.countDead() == 1) {       
+    // 	this.spawnBoss();     
+	// }
 	},
   
   spawnBoss: function () { 
   	this.bossApproaching = true; 
-  	this.boss.reset(this.game.width / 2, 0, BasicGame.BOSS_HEALTH); 
+  	this.boss.reset(this.game.width / 2, 0, BasicGame.BOSS_HEALTH + 500); 
   	this.physics.enable(this.boss, Phaser.Physics.ARCADE); 
   	this.boss.body.velocity.y = BasicGame.BOSS_Y_VELOCITY; 
   	//this.boss.play('fly'); 
@@ -494,7 +503,7 @@ BasicGame.Stage2.prototype = {
     this.bossPool = this.add.group();     
   	this.bossPool.enableBody = true;     
   	this.bossPool.physicsBodyType = Phaser.Physics.ARCADE;     
-  	this.bossPool.createMultiple(1, 'boss');     
+  	this.bossPool.createMultiple(1, 'boss2');     
   	this.bossPool.setAll('anchor.x', 0.5);     
   	this.bossPool.setAll('anchor.y', 0.5);     
   	this.bossPool.setAll('outOfBoundsKill', true);     
