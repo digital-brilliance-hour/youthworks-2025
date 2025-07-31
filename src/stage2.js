@@ -197,7 +197,9 @@ BasicGame.Stage2.prototype = {
 	this.spawnEnemies(); 
   this.enemyFire(); 
 	this.processPlayerInput(); 
-	this.processDelayedEffects();
+	this.processDelayedEffects(); 
+	this.bg2.y += 0.7;
+    	this.processDelayedEffects();
 	this.enemyPool.forEachAlive(function (enemy3) {
   this.physics.arcade.moveToObject(enemy3, this.player, 100);
 }, this); 
@@ -392,6 +394,14 @@ BasicGame.Stage2.prototype = {
   setupBackground: function () {  
     this.sea = this.add.tileSprite(0, 0, this.game.width, this.game.height, 'sea');  
     this.sea.autoScroll(0, BasicGame.SEA_SCROLL_SPEED);  
+	    this.bl2 = this.add.image(0,-1510.4 + this.game.height, 'bl2');
+    this.bl2.width = this.game.width;
+    this.bl2.height = 1510.4;
+    this.bl2.y = 0.9;
+            // game  camer width/ bg width bg1 =800/320 whitch is 2.5 then multiply by the bg hight 2.5 * 5376 =13440
+     this.bg2 = this.add.image(0,-13440 + this.game.height, 'bg2');
+     this.bg2.width = this.game.width;
+     this.bg2.height = 13440;
   },  
 
   setupPlayer: function () {  

@@ -192,11 +192,13 @@ BasicGame.Game.prototype = {
   },
 
   update: function () { 
-	this.checkCollisions(); 
+	//this.checkCollisions();
+	 this.checkCollisions(); 
 	this.spawnEnemies(); 
   this.enemyFire(); 
 	this.processPlayerInput(); 
 	this.processDelayedEffects(); 
+	this.bg1.y += 0.7;
 	},
   
   enemyFire: function() { 
@@ -387,7 +389,10 @@ BasicGame.Game.prototype = {
   //  
   setupBackground: function () {  
     this.sea = this.add.tileSprite(0, 0, this.game.width, this.game.height, 'sea');  
-    this.sea.autoScroll(0, BasicGame.SEA_SCROLL_SPEED);  
+    this.sea.autoScroll(0, BasicGame.SEA_SCROLL_SPEED);
+	   this.bg1 = this.add.image(0,-2651.04 + this.game.height, 'bg1');
+    this.bg1.width = this.game.width;
+    this.bg1.height = 2651.04;
   },  
 
   setupPlayer: function () {  
@@ -431,7 +436,7 @@ BasicGame.Game.prototype = {
     this.shooterPool = this.add.group();     
   	this.shooterPool.enableBody = true;     
   	this.shooterPool.physicsBodyType = Phaser.Physics.ARCADE;     
-  	this.shooterPool.createMultiple(20, 'whiteEnemy');     
+  	this.shooterPool.createMultiple(20, 'stage1-enemy2');
   	this.shooterPool.setAll('anchor.x', 0.5);     
   	this.shooterPool.setAll('anchor.y', 0.5);     
   	this.shooterPool.setAll('outOfBoundsKill', true);     
@@ -440,7 +445,8 @@ BasicGame.Game.prototype = {
     this.shooterPool.setAll('dropRate', BasicGame.SHOOTER_DROP_RATE, false, false, 0, true);
   	// Set the animation for each sprite     
   	this.shooterPool.forEach(function (enemy) {       
-	  	enemy.animations.add('fly', [ 0, 1, 2 ], 20, true);       
+	  	//enemy.animations.add('fly', [ 0, 1, 2 ], 20, true); 
+		enemy.animations.add('fly', Array.from({length:33}, (_, i) => i).toSpliced(1, 0, 0), 20, true);   
 	  	enemy.animations.add('hit', [ 3, 1, 3, 2 ], 20, false);       
 	  	enemy.events.onAnimationComplete.add( function (e) {         
 		  	e.play('fly');       
@@ -560,7 +566,7 @@ BasicGame.Game.prototype = {
     
     if (win) {
     	return this.state.start('Stage2');
-    };
+    }
   },
   
   quitGame: function(pointer, win = false) {
@@ -579,6 +585,7 @@ BasicGame.Game.prototype = {
     this.bossMusic.destroy();
 	this.music.destroy();
 	this.gameOverMusic.destroy();
+	this.state.start('MainMenu');
     //  Then let's go back to the main menu or next stage.
     //if(!win) {
     	//this.state.start('MainMenu');
