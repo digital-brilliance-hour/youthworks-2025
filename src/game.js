@@ -311,7 +311,7 @@ BasicGame.Game.prototype = {
 	this.score += score; 
 	this.scoreText.text = this.score; 
   // this approach prevents the boss from spawning again upon winning     
-    if (this.score >= 20000 && this.bossPool.countDead() == 1) {       
+    if (this.score >= 20 && this.bossPool.countDead() == 1) {       
     	this.spawnBoss();     
 	}
 	},
@@ -321,7 +321,7 @@ BasicGame.Game.prototype = {
   	this.boss.reset(this.game.width / 2, 0, BasicGame.BOSS_HEALTH); 
   	this.physics.enable(this.boss, Phaser.Physics.ARCADE); 
   	this.boss.body.velocity.y = BasicGame.BOSS_Y_VELOCITY; 
-  	this.boss.play('fly'); 
+  	//this.boss.play('fly'); 
     this.music.stop();
 		this.bossMusic.play();
 },
@@ -537,23 +537,31 @@ BasicGame.Game.prototype = {
     this.scoreText.anchor.setTo(0.5, 0.5);
   },
   
-  displayEnd: function (win) { 
-	// you can't win and lose at the same time 
-	if (this.endText && this.endText.exists) { 
-		return; 
-	} 
-	this.bossMusic.stop();
-	this.music.stop();
-	this.gameOverMusic.play();
-	var msg = win ? 'You Win!! :)' : 'Game Over :('; 
-	this.endText = this.add.text(  
-	this.game.width / 2, this.game.height / 2 - 60, msg,  
-		{ font: '72px serif', fill: '#fff' } 
-	); 
-	this.endText.anchor.setTo(0.5, 0); 
+  displayEnd: function(win) {
+    // you can't win and lose at the same time
+    if (this.endText && this.endText.exists) {
+      return;
+    }
+    
+    this.bossMusic.stop();
+		this.music.stop();
+		this.gameOverMusic.play();
 
-	this.showReturn = this.time.now + BasicGame.RETURN_MESSAGE_DELAY; 
-},
+    var msg = win ? 'You Win :)!!!' : 'Game Over! :(';
+    this.endText = this.add.text(
+      this.game.width / 2, this.game.height / 2 - 60, msg, {
+        font: '72px serif',
+        fill: '#fff'
+      }
+    );
+    this.endText.anchor.setTo(0.5, 0);
+
+    this.showReturn = this.time.now + BasicGame.RETURN_MESSAGE_DELAY;
+    
+    if (win) {
+    	return this.state.start('Stage2');
+    };
+  },
   
   quitGame: function(pointer, win = false) {
 
@@ -572,12 +580,12 @@ BasicGame.Game.prototype = {
 	this.music.destroy();
 	this.gameOverMusic.destroy();
     //  Then let's go back to the main menu or next stage.
-    if(!win) {
-    	this.state.start('MainMenu');
-    } 
-    else {
-    	this.state.start('Stage2');
-    }
+    //if(!win) {
+    	//this.state.start('MainMenu');
+    //} 
+    //else {
+    	//this.state.start('Stage2');
+    //}
 
   }
 
