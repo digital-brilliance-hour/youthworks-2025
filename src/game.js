@@ -192,11 +192,13 @@ BasicGame.Game.prototype = {
   },
 
   update: function () { 
-	this.checkCollisions(); 
+	//this.checkCollisions();
+	 this.checkCollisions(); 
 	this.spawnEnemies(); 
   this.enemyFire(); 
 	this.processPlayerInput(); 
 	this.processDelayedEffects(); 
+	this.bg1.y += 0.7;
 	},
   
   enemyFire: function() { 
@@ -387,7 +389,10 @@ BasicGame.Game.prototype = {
   //  
   setupBackground: function () {  
     this.sea = this.add.tileSprite(0, 0, this.game.width, this.game.height, 'sea');  
-    this.sea.autoScroll(0, BasicGame.SEA_SCROLL_SPEED);  
+    this.sea.autoScroll(0, BasicGame.SEA_SCROLL_SPEED);
+	   this.bg1 = this.add.image(0,-2651.04 + this.game.height, 'bg1');
+    this.bg1.width = this.game.width;
+    this.bg1.height = 2651.04;
   },  
 
   setupPlayer: function () {  
