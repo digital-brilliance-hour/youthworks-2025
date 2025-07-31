@@ -199,6 +199,10 @@ BasicGame.Stage2.prototype = {
 	this.processPlayerInput(); 
 	this.processDelayedEffects(); 
 	this.bg2.y += 0.7;
+    	this.processDelayedEffects();
+	this.enemyPool.forEachAlive(function (enemy3) {
+  this.physics.arcade.moveToObject(enemy3, this.player, 100);
+}, this); 
 	},
   
   enemyFire: function() { 
@@ -419,6 +423,17 @@ BasicGame.Stage2.prototype = {
     this.enemyPool.enableBody = true; 
     this.enemyPool.physicsBodyType = Phaser.Physics.ARCADE; 
     this.enemyPool.createMultiple(50, 'stage1-enemy1'); 
+    this.enemyPool.setAll('anchor.x', 0.5); 
+    this.enemyPool.setAll('anchor.y', 0.5); 
+    this.enemyPool.setAll('outOfBoundsKill', true); 
+    this.enemyPool.setAll('checkWorldBounds', true); 
+    this.enemyPool.setAll('reward', BasicGame.ENEMY_REWARD, false, false, 0, true);
+    this.enemyPool.setAll('dropRate', BasicGame.ENEMY_DROP_RATE, false, false, 0, true);
+
+	 this.enemyPool = this.add.group(); 
+    this.enemyPool.enableBody = true; 
+    this.enemyPool.physicsBodyType = Phaser.Physics.ARCADE; 
+    this.enemyPool.createMultiple(20, 'enemy3'); 
     this.enemyPool.setAll('anchor.x', 0.5); 
     this.enemyPool.setAll('anchor.y', 0.5); 
     this.enemyPool.setAll('outOfBoundsKill', true); 
