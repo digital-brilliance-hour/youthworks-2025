@@ -14,8 +14,39 @@ BasicGame.Game.prototype = {
   	this.setupPlayerIcons();
 	this.setupText(); 
   	this.setupAudio();
+	this.fadeIn();
 
 	this.cursors = this.input.keyboard.createCursorKeys(); 
+
+	this.fadeOverlay = this.game.add.graphics(0, 0);
+    this.fadeOverlay.beginFill(0x000000, 1);
+    this.fadeOverlay.drawRect(0, 0, this.game.width, this.game.height);
+    this.fadeOverlay.endFill();
+    this.fadeOverlay.alpha = 0;
+
+	
+	},
+
+	fadeCamera: function(duration, callback) {
+    this.game.add.tween(this.fadeOverlay)
+        .to({ alpha: 1 }, duration, Phaser.Easing.Linear.None, true)
+        .onComplete.addOnce(function () {
+            if (typeof callback === 'function') {
+                callback.call(this);
+            }
+        }, this);
+
+	},
+
+	fadeIn: function(duration = 1000) {
+		this.fadeOverlay = this.game.add.graphics(0, 0);
+		this.fadeOverlay.beginFill(0x000000, 1);
+		this.fadeOverlay.drawRect(0, 0, this.game.width, this.game.height);
+		this.fadeOverlay.endFill();
+		this.fadeOverlay.alpha = 1;
+
+		this.game.add.tween(this.fadeOverlay)
+			.to({ alpha: 0 }, duration, Phaser.Easing.Linear.None, true);
 	},
   
   // 
@@ -544,14 +575,13 @@ BasicGame.Game.prototype = {
   },
   
   displayEnd: function(win) {
-    // you can't win and lose at the same time
-    if (this.endText && this.endText.exists) {
-      return;
-    }
-    
-    this.bossMusic.stop();
-		this.music.stop();
-		this.gameOverMusic.play();
+	// you can't win and lose at the same time
+	if (this.endText && this.endText.exists) {
+		return;
+	}
+	this.bossMusic.stop();
+	this.music.stop();
+	this.gameOverMusic.play();
 
     var msg = win ? 'You Win :)!!!' : 'Game Over! :(';
     this.endText = this.add.text(
@@ -566,7 +596,7 @@ BasicGame.Game.prototype = {
     
     if (win) {
     	return this.state.start('Stage2');
-    }
+    };
   },
   
   quitGame: function(pointer, win = false) {
