@@ -1,4 +1,4 @@
-//Stage 2 Object Edit
+//Game Logic Object
 BasicGame.Stage2 = function(game) {
 
 };
@@ -14,6 +14,7 @@ BasicGame.Stage2.prototype = {
   	this.setupPlayerIcons();
 	this.setupText(); 
   	this.setupAudio();
+	console.log("Now in stage 2 :D");
 
 	this.cursors = this.input.keyboard.createCursorKeys(); 
 	},
@@ -311,7 +312,7 @@ BasicGame.Stage2.prototype = {
 	this.score += score; 
 	this.scoreText.text = this.score; 
   // this approach prevents the boss from spawning again upon winning     
-    if (this.score >= 20000 && this.bossPool.countDead() == 1) {       
+    if (this.score >= 20 && this.bossPool.countDead() == 1) {       
     	this.spawnBoss();     
 	}
 	},
@@ -321,7 +322,7 @@ BasicGame.Stage2.prototype = {
   	this.boss.reset(this.game.width / 2, 0, BasicGame.BOSS_HEALTH); 
   	this.physics.enable(this.boss, Phaser.Physics.ARCADE); 
   	this.boss.body.velocity.y = BasicGame.BOSS_Y_VELOCITY; 
-  	this.boss.play('fly'); 
+  	//this.boss.play('fly'); 
     this.music.stop();
 		this.bossMusic.play();
 },
@@ -408,7 +409,7 @@ BasicGame.Stage2.prototype = {
     this.enemyPool = this.add.group(); 
     this.enemyPool.enableBody = true; 
     this.enemyPool.physicsBodyType = Phaser.Physics.ARCADE; 
-    this.enemyPool.createMultiple(50, 'greenEnemy'); 
+    this.enemyPool.createMultiple(50, 'stage1-enemy1'); 
     this.enemyPool.setAll('anchor.x', 0.5); 
     this.enemyPool.setAll('anchor.y', 0.5); 
     this.enemyPool.setAll('outOfBoundsKill', true); 
@@ -417,13 +418,13 @@ BasicGame.Stage2.prototype = {
     this.enemyPool.setAll('dropRate', BasicGame.ENEMY_DROP_RATE, false, false, 0, true);
 
     // Set the animation for each sprite 
-    this.enemyPool.forEach(function (enemy) { 
+    /* this.enemyPool.forEach(function (enemy) { 
       enemy.animations.add('fly', [ 0, 1, 2 ], 20, true);
       enemy.animations.add('hit', [ 3, 1, 3, 2 ], 20, false);       
       enemy.events.onAnimationComplete.add( function (e) {         
       e.play('fly');       
       }, this);
-    }); 
+    });  */
 
     this.nextEnemyAt = 0; 
     this.enemyDelay = BasicGame.SPAWN_ENEMY_DELAY; 
@@ -463,13 +464,13 @@ BasicGame.Stage2.prototype = {
   		'dropRate', BasicGame.BOSS_DROP_RATE, false, false, 0, true     
   	);      
   	// Set the animation for each sprite     
-  	this.bossPool.forEach(function (enemy) {       
-	  	enemy.animations.add('fly', [ 0, 1, 2 ], 20, true);       
-	  	enemy.animations.add('hit', [ 3, 1, 3, 2 ], 20, false);       
-	  	enemy.events.onAnimationComplete.add( function (e) {         
-	  		e.play('fly');       
-	    }, this);     
-    });      
+  	//this.bossPool.forEach(function (enemy) {       
+	  	//enemy.animations.add('fly', [ 0, 1, 2 ], 20, true);       
+	  	//enemy.animations.add('hit', [ 3, 1, 3, 2 ], 20, false);       
+	  	//enemy.events.onAnimationComplete.add( function (e) {         
+	  		//e.play('fly');       
+	    //}, this);     
+    //});      
     this.boss = this.bossPool.getTop();     
     this.bossApproaching = false;
   }, 
@@ -522,7 +523,7 @@ BasicGame.Stage2.prototype = {
 
   setupText: function () { 
     this.instructions = this.add.text(       this.game.width / 2,        this.game.height - 100,  
-    'Use Arrow Keys to Move, Press Z to Fire\n' +  
+    'Use Arrow Keys to Move, Press Z to Shoot\n' +  
     'Tapping/clicking does both',  
     { font: '20px monospace', fill: '#fff', align: 'center' } 
     ); 
@@ -545,7 +546,7 @@ BasicGame.Stage2.prototype = {
 	this.bossMusic.stop();
 	this.music.stop();
 	this.gameOverMusic.play();
-	var msg = win ? 'You Win!!!' : 'Game Over!'; 
+	var msg = win ? 'You Win!! :)' : 'Game Over :('; 
 	this.endText = this.add.text(  
 	this.game.width / 2, this.game.height / 2 - 60, msg,  
 		{ font: '72px serif', fill: '#fff' } 
@@ -555,7 +556,7 @@ BasicGame.Stage2.prototype = {
 	this.showReturn = this.time.now + BasicGame.RETURN_MESSAGE_DELAY; 
 },
   
-  quitGame: function(pointer) {
+  quitGame: function(pointer, win = false) {
 
     //  Here you should destroy anything you no longer need.
     //  Stop music, delete sprites, purge caches, free resources, all that good stuff.
@@ -568,11 +569,16 @@ BasicGame.Stage2.prototype = {
     this.scoreText.destroy();     
     this.endText.destroy();     
     this.returnText.destroy();
-    //  Then let's go back to the main menu.
-    this.state.start('MainMenu');
     this.bossMusic.destroy();
 	this.music.destroy();
 	this.gameOverMusic.destroy();
+    //  Then let's go back to the main menu or next stage.
+    if(!win) {
+    	this.state.start('MainMenu');
+    } 
+    else {
+    	this.state.start('Stage2');
+    }
 
   }
 
