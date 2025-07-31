@@ -45,6 +45,7 @@ BasicGame.Preloader.prototype = {
     this.load.audio('powerUp', ['assets/powerup.ogg', 'assets/powerup.wav']);
     this.load.audio('titleMusic', ['assets/bgm/title-music.ogg']);
     this.load.audio('stageOne', ['assets/bgm/stage1.ogg']);
+    this.load.audio('stageTwo', ['assets/bgm/stage2.ogg']);
     this.load.spritesheet('stage1-enemy2', 'assets/ememy2shoot.png', 128, 128);
     this.load.spritesheet('whiteEnemy', 'assets/shooting-enemy.png', 32, 32);
     this.load.image('enemy3', 'assets/ememy3.png', 32, 32);//  + lots of other required assets here

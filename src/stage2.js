@@ -136,7 +136,7 @@ BasicGame.Stage2.prototype = {
   this.enemyFireSFX = this.add.audio('enemyFire', 0.6, false);
   this.playerFireSFX = this.add.audio('playerFire', 0.6, false);
   this.powerUpSFX = this.add.audio('powerUp', 0.6, false);
-  this.music = this.add.audio('stageMusic', 0.4, true);
+  this.music = this.add.audio('stageTwo', 0.4, true);
   this.bossMusic = this.add.audio('bossMusic', 0.4, true);
   this.gameOverMusic = this.add.audio('gameOverMusic');
   this.music.play();
