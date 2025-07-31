@@ -41,7 +41,7 @@ BasicGame.Preloader.prototype = {
     this.load.audio('enemyFire', ['assets/enemy-fire.ogg', 'assets/enemy-fire.wav']);
     this.load.audio('playerFire', ['assets/player-fire.ogg', 'assets/player-fire.wav']);
     this.load.audio('powerUp', ['assets/powerup.ogg', 'assets/powerup.wav']);
-    this.load.audio('titleMusic', ['audio/main_menu.mp3']);
+    this.load.audio('titleMusic', ['assets/bgm/title-music.ogg']);
     //  + lots of other required assets here
 
   },
