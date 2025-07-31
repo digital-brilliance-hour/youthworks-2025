@@ -26,7 +26,7 @@ BasicGame.Preloader.prototype = {
     this.load.image('bl2', 'assets/stageBackground2/backlayer1/backlayer1.png');
 
     //  Here we load the rest of the assets our game needs.
-    this.load.image('titlepage', 'assets/titlepage.png');
+    this.load.image('titlepage', 'assets/title-screen-game2.png');
     this.load.image('sea', 'assets/sea.png');
     this.load.image('bg1', 'assets/stageBackground1.png');
     this.load.image('sand', 'assets/sand.png');
