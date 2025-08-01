@@ -18,25 +18,25 @@ BasicGame.Game.prototype = {
 
 	this.cursors = this.input.keyboard.createCursorKeys(); 
 
-	this.fadeOverlay = this.game.add.graphics(0, 0);
-    this.fadeOverlay.beginFill(0x000000, 1);
-    this.fadeOverlay.drawRect(0, 0, this.game.width, this.game.height);
-    this.fadeOverlay.endFill();
-    this.fadeOverlay.alpha = 0;
+	//this.fadeOverlay = this.game.add.graphics(0, 0);
+    //this.fadeOverlay.beginFill(0x000000, 1);
+    //this.fadeOverlay.drawRect(0, 0, this.game.width, this.game.height);
+    //this.fadeOverlay.endFill();
+    //this.fadeOverlay.alpha = 0;
 
 	
 	},
 
-	fadeCamera: function(duration, callback) {
-    this.game.add.tween(this.fadeOverlay)
-        .to({ alpha: 1 }, duration, Phaser.Easing.Linear.None, true)
-        .onComplete.addOnce(function () {
-            if (typeof callback === 'function') {
-                callback.call(this);
-            }
-        }, this);
+	//fadeCamera: function(duration, callback) {
+    //this.game.add.tween(this.fadeOverlay)
+      //  .to({ alpha: 1 }, duration, Phaser.Easing.Linear.None, true)
+        //.onComplete.addOnce(function () {
+          //  if (typeof callback === 'function') {
+            //    callback.call(this);
+            //}
+        //}, this);
 
-	},
+	//},
 
 	fadeIn: function(duration = 1000) {
 		this.fadeOverlay = this.game.add.graphics(0, 0);
@@ -352,9 +352,9 @@ BasicGame.Game.prototype = {
 	this.score += score; 
 	this.scoreText.text = this.score; 
   // this approach prevents the boss from spawning again upon winning     
-    // if (this.score >= 20000 && this.bossPool.countDead() == 1) {       
-    // 	this.spawnBoss();     
-	// }
+    if (this.score >= 20000 && this.bossPool.countDead() == 1) {       
+    	this.spawnBoss();     
+	}
 	},
   
   spawnBoss: function () { 
@@ -591,24 +591,38 @@ BasicGame.Game.prototype = {
 	if (this.endText && this.endText.exists) {
 		return;
 	}
-	this.bossMusic.stop();
-	this.music.stop();
-	this.gameOverMusic.play();
+	//this.bossMusic.stop();
+	//this.music.stop();
+	//.gameOverMusic.play();
 
-    var msg = win ? 'You Win :)!!!' : 'Game Over! :(';
-    this.endText = this.add.text(
-      this.game.width / 2, this.game.height / 2 - 60, msg, {
+    //var msg = win ? 'You Win :)!!!' : 'Game Over! :(';
+    //this.endText = this.add.text(
+     // this.game.width / 2, this.game.height / 2 - 60, msg, {
+     //   font: '72px serif',
+     //   fill: '#fff'
+     // }
+    //);
+   // this.endText.anchor.setTo(0.5, 0);
+
+    //this.showReturn = this.time.now + BasicGame.RETURN_MESSAGE_DELAY;
+    
+    if (win) {
+    	return this.state.start('Stage2');
+    } else {
+		var msg = win ? 'You Win :)!!!' : 'Game Over! :(';
+    	this.endText = this.add.text(
+      	this.game.width / 2, this.game.height / 2 - 60, msg, {
         font: '72px serif',
         fill: '#fff'
       }
     );
-    this.endText.anchor.setTo(0.5, 0);
-
+	this.endText.anchor.setTo(0.5, 0);
     this.showReturn = this.time.now + BasicGame.RETURN_MESSAGE_DELAY;
-    
-    if (win) {
-    	return this.state.start('Stage2');
-    };
+
+	this.bossMusic.stop();
+	this.music.stop();
+	this.gameOverMusic.play();
+	}
   },
   
   quitGame: function(pointer, win = false) {
