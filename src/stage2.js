@@ -5,21 +5,21 @@ BasicGame.Stage2 = function(game) {
 
 BasicGame.Stage2.prototype = {
 
-  create: function () { 
-	//this.fadeIn();
-	this.setupBackground(); 
-	this.setupPlayer(); 
-	this.setupEnemies(); 
-	this.setupBullets(); 
-	this.setupExplosions();
-  	this.setupPlayerIcons();
-	this.setupText(); 
-  	this.setupAudio();
-	console.log("Now in stage 2 :D");
+	create: function () { 
+		//this.fadeIn();
+		this.setupBackground(); 
+		this.setupPlayer(); 
+		this.setupEnemies(); 
+		this.setupBullets(); 
+		this.setupExplosions();
+		this.setupPlayerIcons();
+		this.setupText(); 
+		this.setupAudio();
+		console.log("Now in stage 2 :D");
 
-	this.cursors = this.input.keyboard.createCursorKeys(); 
-	this.fadeIn(5000, 3000);
-	},
+		this.cursors = this.input.keyboard.createCursorKeys(); 
+		this.fadeIn(1000, 500);
+		},
 
 	fadeIn: function(duration, delay) {
 		this.fadeOverlay = this.game.add.graphics(0, 0);
