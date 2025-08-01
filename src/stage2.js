@@ -229,6 +229,40 @@ BasicGame.Stage2.prototype = {
   		this.physics.arcade.moveToObject(enemy3, this.player, 100);
 	}, this); 
 	},
+
+		flashSprite: function(sprite, flashColor, duration, repeat) {
+  if (!sprite) return;
+
+  let flashCount = 0;
+  const originalTint = sprite.tint;
+  const wasAnimating = sprite.animations && sprite.animations.currentAnim && sprite.animations.currentAnim.isPlaying;
+
+  if (sprite.animations && sprite.animations.currentAnim) {
+    sprite.animations.paused = true;
+  }
+
+  const flash = () => {
+    if (flashCount >= repeat) {
+      sprite.tint = originalTint;
+      if (sprite.animations && sprite.animations.currentAnim && wasAnimating) {
+        sprite.animations.paused = false;
+      }
+      return;
+    }
+
+    sprite.tint = flashColor;
+
+    this.time.events.add(duration, () => {
+      sprite.tint = originalTint;
+      this.time.events.add(duration, () => {
+        flashCount++;
+        flash();
+      });
+    });
+  };
+
+  flash();
+},
   
   enemyFire: function() { 
 	this.shooterPool.forEachAlive(function (enemy) { 
@@ -296,8 +330,9 @@ BasicGame.Stage2.prototype = {
     if (life !== null) {       
       life.kill(); 
       this.weaponLevel = 0;
-      this.ghostUntil = this.time.now + BasicGame.PLAYER_GHOST_TIME;       
-      this.player.play('ghost');     
+      this.ghostUntil = this.time.now + BasicGame.PLAYER_GHOST_TIME; 
+	  this.flashSprite(player, 0xff8c00, 150, 5);       
+      //this.player.play('ghost');     
     } else {       
       this.explode(player);       
       player.kill();
@@ -307,11 +342,26 @@ BasicGame.Stage2.prototype = {
   
   damageEnemy: function (enemy, damage) { 
 	enemy.damage(damage); 
-	if (enemy.alive) { 
-		enemy.play('hit'); 
+	if (enemy.alive && enemy.key === 'stage1-enemy1') { 
+		this.flashSprite(enemy, 0xFF4040, 100, 3);
+		enemy.play('hit');
+
+	}
+	else if (enemy.alive && enemy.key === 'stage1-enemy2') { 
+		this.flashSprite(enemy, 0xFF4040, 100, 3);
+		enemy.play('hit');
+
+	}
+	else if (enemy.alive && enemy.key === 'enemy3') { 
+		this.flashSprite(enemy, 0xFF4040, 100, 3);
+		enemy.play('hit');
+
+	}
+	else if (enemy.alive && enemy.key === 'boss2') {
+			this.flashSprite(enemy, 0xFF00FF, 100, 3);
 	} else { 
   	this.explosionSFX.play();
-		this.explode(enemy); 
+	this.explode(enemy); 
     this.spawnPowerUp(enemy);
     this.addToScore(enemy.reward);
     // We check the sprite key (e.g. 'greenEnemy') to see if the sprite is a boss       

@@ -228,6 +228,7 @@ BasicGame.Game.prototype = {
   	this.enemyFire(); 
 	this.processPlayerInput(); 
 	this.processDelayedEffects(); 
+	//this.flashSprite();
 	if (this.bg1.y >= 0) {
           this.bg1.y = 0;
           if (this.bossPool.countDead() == 1) {    
@@ -239,6 +240,41 @@ BasicGame.Game.prototype = {
           this.bg1.y += 0.7;
         }
 	},
+
+
+	flashSprite: function(sprite, flashColor, duration, repeat) {
+  if (!sprite) return;
+
+  let flashCount = 0;
+  const originalTint = sprite.tint;
+  const wasAnimating = sprite.animations && sprite.animations.currentAnim && sprite.animations.currentAnim.isPlaying;
+
+  if (sprite.animations && sprite.animations.currentAnim) {
+    sprite.animations.paused = true;
+  }
+
+  const flash = () => {
+    if (flashCount >= repeat) {
+      sprite.tint = originalTint;
+      if (sprite.animations && sprite.animations.currentAnim && wasAnimating) {
+        sprite.animations.paused = false;
+      }
+      return;
+    }
+
+    sprite.tint = flashColor;
+
+    this.time.events.add(duration, () => {
+      sprite.tint = originalTint;
+      this.time.events.add(duration, () => {
+        flashCount++;
+        flash();
+      });
+    });
+  };
+
+  flash();
+},
   
   enemyFire: function() { 
 	this.shooterPool.forEachAlive(function (enemy) { 
@@ -290,10 +326,15 @@ BasicGame.Game.prototype = {
 	}
 },
   
-	enemyHit: function (bullet, enemy) {     
-  	bullet.kill();     
-  	this.damageEnemy(enemy, BasicGame.BULLET_DAMAGE);
-		},
+	enemyHit: function (bullet, enemy) {
+    bullet.kill();
+
+    if (!enemy || !enemy.exists || typeof enemy.tint === 'undefined') {
+        return;
+    }
+
+    this.damageEnemy(enemy, BasicGame.BULLET_DAMAGE);
+},
   
   playerHit: function (player, enemy) {     
     // crashing into an enemy only deals 5 damage     
@@ -303,11 +344,12 @@ BasicGame.Game.prototype = {
     explosion.animations.add('boom');     
     explosion.play('boom', 15, false, true);     
     var life = this.lives.getFirstAlive();     
-    if (life !== null) {       
+    if (life !== null) {   
       life.kill(); 
       this.weaponLevel = 0;
-      this.ghostUntil = this.time.now + BasicGame.PLAYER_GHOST_TIME;       
-      this.player.play('ghost');     
+      this.ghostUntil = this.time.now + BasicGame.PLAYER_GHOST_TIME;  
+	  this.flashSprite(player, 0xff8c00, 150, 5);     
+      //this.player.play('ghost');     
     } else {       
       this.explode(player);       
       player.kill();
@@ -317,22 +359,37 @@ BasicGame.Game.prototype = {
   
   damageEnemy: function (enemy, damage) { 
 	enemy.damage(damage); 
-	if (enemy.alive) { 
-		enemy.play('hit'); 
+	if (enemy.alive && enemy.key === 'stage1-enemy1') { 
+		this.flashSprite(enemy, 0xFF4040, 100, 3);
+		enemy.play('hit');
+
+	}
+	else if (enemy.alive && enemy.key === 'stage1-enemy2') { 
+		this.flashSprite(enemy, 0xFF4040, 100, 3);
+		enemy.play('hit');
+
+	}
+	else if (enemy.alive && enemy.key === 'enemy3') { 
+		this.flashSprite(enemy, 0xFF4040, 100, 3);
+		enemy.play('hit');
+
+	}
+	if (enemy.alive && enemy.key === 'boss') {
+			this.flashSprite(enemy, 0xFF00FF, 100, 3);
 	} else { 
   	this.explosionSFX.play();
-		this.explode(enemy); 
+	this.explode(enemy); 
     this.spawnPowerUp(enemy);
     this.addToScore(enemy.reward);
     // We check the sprite key (e.g. 'greenEnemy') to see if the sprite is a boss       
 	    // For full games, it would be better to set flags on the sprites themselves       
-	    if (enemy.key === 'boss') {         
-		    this.enemyPool.destroy();         
-		    this.shooterPool.destroy();         
-		    this.bossPool.destroy();         
-		    this.enemyBulletPool.destroy();         
-		    this.displayEnd(true);       
-      }
+	if (enemy.key === 'boss') {         
+		this.enemyPool.destroy();         
+		this.shooterPool.destroy();         
+		this.bossPool.destroy();         
+		this.enemyBulletPool.destroy();         
+		this.displayEnd(true);       
+	}
     } 
 	},
   
@@ -352,7 +409,7 @@ BasicGame.Game.prototype = {
 	this.score += score; 
 	this.scoreText.text = this.score; 
   // this approach prevents the boss from spawning again upon winning     
-    if (this.score >= 20000 && this.bossPool.countDead() == 1) {       
+    if (this.score >= 200 && this.bossPool.countDead() == 1) {       
     	this.spawnBoss();     
 	}
 	},
