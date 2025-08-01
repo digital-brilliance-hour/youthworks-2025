@@ -222,11 +222,11 @@ BasicGame.Stage2.prototype = {
 
         } 
         else {
-          this.bg2.y += 0.7;
+          this.bg2.y += 1.5;
         }
     this.processDelayedEffects();
 	this.enemyPool.forEachAlive(function (enemy3) {
-  		this.physics.arcade.moveToObject(enemy3, this.player, 100);
+  		this.physics.arcade.moveToObject(enemy3, this.player, 200);
 	}, this); 
 	},
 

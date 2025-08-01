@@ -237,7 +237,7 @@ BasicGame.Game.prototype = {
 
         } 
         else {
-          this.bg1.y += 0.7;
+          this.bg1.y += 0.4;
         }
 	},
 
@@ -409,9 +409,9 @@ BasicGame.Game.prototype = {
 	this.score += score; 
 	this.scoreText.text = this.score; 
   // this approach prevents the boss from spawning again upon winning     
-    if (this.score >= 200 && this.bossPool.countDead() == 1) {       
-    	this.spawnBoss();     
-	}
+    // if (this.score >= 200 && this.bossPool.countDead() == 1) {       
+    // 	this.spawnBoss();     
+	// }
 	},
   
   spawnBoss: function () { 
