@@ -37,24 +37,12 @@ BasicGame.MainMenu.prototype = {
 
   },
 
-  fadeIn: function(duration, delay) {
-		this.fadeOverlay = this.game.add.graphics(0, 0);
-		this.fadeOverlay.beginFill(0x000000, 1);
-		this.fadeOverlay.drawRect(0, 0, this.game.width, this.game.height);
-		this.fadeOverlay.endFill();
-		this.fadeOverlay.alpha = 1;
-
-		this.game.add.tween(this.fadeOverlay)
-			.to({ alpha: 0 }, duration, Phaser.Easing.Linear.None, true, delay);
-	},
-
   startGame: function (pointer) {
 
     //  Ok, the Play Button has been clicked or touched, so let's stop the music (otherwise it'll carry on playing)
      this.music.stop();
 
     //  And start the actual game
-    this.fadeIn(2000,1000);
     this.state.start('Game');
 
   }
