@@ -46,11 +46,11 @@ BasicGame.Preloader.prototype = {
     this.load.audio('enemyFire', ['assets/enemy-fire.ogg', 'assets/enemy-fire.wav']);
     this.load.audio('playerFire', ['assets/player-fire.ogg', 'assets/player-fire.wav']);
     this.load.audio('powerUp', ['assets/powerup.ogg', 'assets/powerup.wav']);
-    this.load.audio('titleMusic', ['assets/bgm/title-music.ogg']);
+    this.load.audio('titleMusic', ['assets/bgm/title-music.ogg', 'assets/bgm/title-music.mp3']);
     this.load.audio('gameOverMusic', ['assets/bgm/gameovermusic.mp3']);
-    this.load.audio('stageOne', ['assets/bgm/stage1.ogg']);
-    this.load.audio('stageTwo', ['assets/bgm/stage2.ogg']);
-    this.load.audio('bossMusic', ['assets/bgm/boss-music.ogg']);
+    this.load.audio('stageOne', ['assets/bgm/stage1.ogg', 'assets/bgm/stage1.mp3']);
+    this.load.audio('stageTwo', ['assets/bgm/stage2.ogg', 'assets/bgm/stage2.mp3']);
+    this.load.audio('bossMusic', ['assets/bgm/boss-music.ogg', 'assets/bgm/boss-music.mp3']);
     this.load.spritesheet('stage1-enemy2', 'assets/ememy2shoot.png', 128, 128);
     this.load.spritesheet('whiteEnemy', 'assets/shooting-enemy.png', 32, 32);
     this.load.image('enemy3', 'assets/ememy3.png', 32, 32);//  + lots of other required assets here
