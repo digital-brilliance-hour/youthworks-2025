@@ -38,7 +38,8 @@ BasicGame.Game.prototype = {
 
 	//},
 
-	fadeIn: function(duration = 1000) {
+	fadeIn: function(duration) {
+		duration = duration || 1000;
 		this.fadeOverlay = this.game.add.graphics(0, 0);
 		this.fadeOverlay.beginFill(0x000000, 1);
 		this.fadeOverlay.drawRect(0, 0, this.game.width, this.game.height);
@@ -156,7 +157,13 @@ BasicGame.Game.prototype = {
   this.music = this.add.audio('stageOne', 0.4, true);
   this.bossMusic = this.add.audio('bossMusic', 0.4, true);
   this.gameOverMusic = this.add.audio('gameOverMusic');
-  this.music.play();
+  
+  // Try to play music - iOS may block this, but it won't hang
+  try {
+    this.music.play();
+  } catch (e) {
+    // Silently fail on iOS - music will start on first user interaction
+  }
 },
 
   processPlayerInput: function () { 
