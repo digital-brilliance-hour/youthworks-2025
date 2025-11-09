@@ -550,7 +550,9 @@ BasicGame.Game.prototype = {
   	// Set the animation for each sprite     
   	this.shooterPool.forEach(function (enemy) {       
 	  	//enemy.animations.add('fly', [ 0, 1, 2 ], 20, true); 
-		enemy.animations.add('fly', Array.from({length:33}, (_, i) => i).toSpliced(1, 0, 0), 20, true);   
+		var frames = Array.from({length:33}, function(_, i) { return i; });
+		frames.splice(1, 0, 0);
+		enemy.animations.add('fly', frames, 20, true);   
 	  	enemy.animations.add('hit', [ 3, 1, 3, 2 ], 20, false);       
 	  	enemy.events.onAnimationComplete.add( function (e) {         
 		  	e.play('fly');       
@@ -615,7 +617,9 @@ BasicGame.Game.prototype = {
     this.bulletPool.setAll('checkWorldBounds', true); 
 	this.bulletPool.forEach(function (bullet) {       
 		//enemy.animations.add('fly', [ 0, 1, 2 ], 20, true); 
-		bullet.animations.add('fly', Array.from({length:3}, (_, i) => i).toSpliced(1, 0, 0), 20, true);   
+		var frames = Array.from({length:3}, function(_, i) { return i; });
+		frames.splice(1, 0, 0);
+		bullet.animations.add('fly', frames, 20, true);   
 	});    
 
     this.nextShotAt = 0; 
