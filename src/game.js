@@ -147,7 +147,6 @@ BasicGame.Game.prototype = {
 	}
     
   },
-  
   setupAudio: function () {
   this.explosionSFX = this.add.audio('explosion', 0.6, false);
   this.playerExplosionSFX = this.add.audio('playerExplosion', 0.6, false);
@@ -158,17 +157,19 @@ BasicGame.Game.prototype = {
   this.bossMusic = this.add.audio('bossMusic', 0.4, true);
   this.gameOverMusic = this.add.audio('gameOverMusic');
   
-  // Try to play music - iOS may block this, but it won't hang
-  try {
-    this.music.play();
-  } catch (e) {
-    // Silently fail on iOS - music will start on first user interaction
-  }
+  // Flag to track if music has started
+  this.musicStarted = false;
 },
 
   processPlayerInput: function () { 
     this.player.body.velocity.x = 0; 
     this.player.body.velocity.y = 0; 
+
+    // Start music on first user interaction (iOS compatibility)
+    if (!this.musicStarted && this.music && !this.music.isPlaying) {
+      this.music.play();
+      this.musicStarted = true;
+    }
 
     if (this.cursors.left.isDown) { 
       this.player.body.velocity.x = -this.player.speed; 
