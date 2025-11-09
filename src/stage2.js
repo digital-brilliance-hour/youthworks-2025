@@ -22,6 +22,8 @@ BasicGame.Stage2.prototype = {
 		},
 
 	fadeIn: function(duration, delay) {
+		duration = duration || 1000;
+		delay = delay || 0;
 		this.fadeOverlay = this.game.add.graphics(0, 0);
 		this.fadeOverlay.beginFill(0x000000, 1);
 		this.fadeOverlay.drawRect(0, 0, this.game.width, this.game.height);
@@ -139,12 +141,20 @@ BasicGame.Stage2.prototype = {
   this.music = this.add.audio('stageTwo', 0.4, true);
   this.bossMusic = this.add.audio('bossMusic', 0.4, true);
   this.gameOverMusic = this.add.audio('gameOverMusic');
-  this.music.play();
+  
+  // Flag to track if music has started
+  this.musicStarted = false;
 },
 
   processPlayerInput: function () { 
     this.player.body.velocity.x = 0; 
     this.player.body.velocity.y = 0; 
+
+    // Start music on first user interaction (iOS compatibility)
+    if (!this.musicStarted && this.music && !this.music.isPlaying) {
+      this.music.play();
+      this.musicStarted = true;
+    }
 
     if (this.cursors.left.isDown) { 
       this.player.body.velocity.x = -this.player.speed; 
@@ -233,15 +243,16 @@ BasicGame.Stage2.prototype = {
 		flashSprite: function(sprite, flashColor, duration, repeat) {
   if (!sprite) return;
 
-  let flashCount = 0;
-  const originalTint = sprite.tint;
-  const wasAnimating = sprite.animations && sprite.animations.currentAnim && sprite.animations.currentAnim.isPlaying;
+  var flashCount = 0;
+  var originalTint = sprite.tint;
+  var wasAnimating = sprite.animations && sprite.animations.currentAnim && sprite.animations.currentAnim.isPlaying;
 
   if (sprite.animations && sprite.animations.currentAnim) {
     sprite.animations.paused = true;
   }
 
-  const flash = () => {
+  var self = this;
+  var flash = function() {
     if (flashCount >= repeat) {
       sprite.tint = originalTint;
       if (sprite.animations && sprite.animations.currentAnim && wasAnimating) {
@@ -252,9 +263,9 @@ BasicGame.Stage2.prototype = {
 
     sprite.tint = flashColor;
 
-    this.time.events.add(duration, () => {
+    self.time.events.add(duration, function() {
       sprite.tint = originalTint;
-      this.time.events.add(duration, () => {
+      self.time.events.add(duration, function() {
         flashCount++;
         flash();
       });
@@ -541,7 +552,9 @@ BasicGame.Stage2.prototype = {
   	// Set the animation for each sprite     
   	this.shooterPool.forEach(function (enemy) {       
 	  	//enemy.animations.add('fly', [ 0, 1, 2 ], 20, true); 
-		enemy.animations.add('fly', Array.from({length:33}, (_, i) => i).toSpliced(1, 0, 0), 20, true);   
+		var frames = Array.from({length:33}, function(_, i) { return i; });
+		frames.splice(1, 0, 0);
+		enemy.animations.add('fly', frames, 20, true);   
 	  	enemy.animations.add('hit', [ 3, 1, 3, 2 ], 20, false);       
 	  	enemy.events.onAnimationComplete.add( function (e) {         
 		  	e.play('fly');       
@@ -656,7 +669,8 @@ BasicGame.Stage2.prototype = {
 	this.showReturn = this.time.now + BasicGame.RETURN_MESSAGE_DELAY; 
 },
   
-  quitGame: function(pointer, win = false) {
+  quitGame: function(pointer, win) {
+    win = win || false;
 
     //  Here you should destroy anything you no longer need.
     //  Stop music, delete sprites, purge caches, free resources, all that good stuff.
