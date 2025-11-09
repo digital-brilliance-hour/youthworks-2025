@@ -32,17 +32,12 @@ BasicGame.MainMenu.prototype = {
     //this.add.text(this.game.width / 2, this.game.height - 90, "image assets Copyright (c) 2002 Ari Feldman", { font: "12px monospace", fill: "#fff", align: "center"}).anchor.setTo(0.5, 0.5);
     //this.add.text(this.game.width / 2, this.game.height - 75, "sound assets Copyright (c) 2012 - 2013 Devin Watson", { font: "12px monospace", fill: "#fff", align: "center"}).anchor.setTo(0.5, 0.5);
     this.music = this.add.audio('titleMusic', 0.5, true);
-    this.musicStarted = false;
+    this.music.play();
   },
 
   update: function () {
 
-    // Start music on first interaction (iOS compatibility)
-    if (!this.musicStarted && (this.input.keyboard.isDown(Phaser.Keyboard.Z) || this.input.activePointer.isDown)) {
-      if (this.music && !this.music.isPlaying) {
-        this.music.play();
-        this.musicStarted = true;
-      }
+    if (this.input.keyboard.isDown(Phaser.Keyboard.Z) || this.input.activePointer.isDown) {
       this.startGame();
     }
     //  Do some nice funky main menu effect here
